@@ -11,4 +11,5 @@
 ![config변경](https://github.com/noteasytodoit/noteasytodoit.github.io/blob/master/%EC%9C%A0%EB%A0%88%EC%B9%B4%EC%9A%A9%20%EC%82%AC%EC%A7%844.png)
 ## 4. 배운 내용에 대한 Post를 작성
 
+![post](https://github.com/noteasytodoit/noteasytodoit.github.io/blob/master/%EC%9C%A0%EB%A0%88%EC%B9%B4%EC%9A%A9%20%EC%82%AC%EC%A7%845.png)
 [제작된 깃 블로그](https://noteasytodoit.github.io)
