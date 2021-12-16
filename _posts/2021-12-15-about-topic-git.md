@@ -5,7 +5,7 @@ summary: "Getting Started postig about git"
 author: Mun Jihwan
 date: '2021-12-16 14:16:23 +0530'
 category: Git
-thumbnail: /assets/img/posts/code.jpg
+thumbnail: null
 keywords: devlopr jekyll, how to use devlopr, devlopr, how to use devlopr-jekyll, devlopr-jekyll tutorial,best jekyll themes
 permalink: /blog/welcome-to-devlopr-jekyll/
 usemathjax: true
