@@ -11,248 +11,82 @@ permalink: /blog/welcome-to-devlopr-jekyll/
 usemathjax: true
 ---
 
-## MongoDB가 JS를 사용해서 얻은 특징
+## Markdown이란?
 
-- 웹 개발자에게 쉬운 입문이 가능하다
-- BSON 자료형을 사용
-- 내부 명령어를 JS 형식으로 사용
+- 일반 텍스트 기반의 경량 마크업 언어
+- 특수기호와 문자를 이용한 매우 간단한 구조의 문법을 사용
+
   
-## MongoDB의 CRUD
-  
-### MongoDB의 기본 구조
+## Markdown의 장단점
 
-- 데이터베이스 (← database)
-- 컬렉션 (← table)
-- 도큐먼트 (← row)
+### 장점
+- 간결하다.
+- 별도의 도구없이 작성가능하다.
+- 다양한 형태로 변환이 가능하다.
+- 텍스트(Text)로 저장되기 때문에 용량이 적어 보관이 용이하다.
+- 텍스트파일이기 때문에 버전관리시스템을 이용하여 변경이력을 관리할 수 있다.
+- 지원하는 프로그램과 플랫폼이 다양하다.
 
-### Document → BSON(Binary JSON)  자료구조
+### 단점
+- 표준이 없다.
+- 표준이 없기 때문에 도구에 따라서 변환방식이나 생성물이 다르다.
+- 모든 HTML 마크업을 대신하지 못한다.
+	
+## Markdown의 사용
 
-```python
-# import python-mongo module
-import pymongo
-
-# create connection between DB and Script
-connection = pymongo.MongoClient('mongodb://localhost:27017/')
-
-# access database (if not exist, create one!)
-db = connection.get_database("testDB")
-
-# access collection under database
-collection = db.get_collection("testCollection")
-
-# INSERT data in collection
-collection.insert_one({'hello':'world'})
-
-# get list of Database
-connection.list_database_names()
-
-# get list of Collection
-db.list_collection_names()
-
-#pprint로 도큐먼트 목록 조회
-pprint(list(collection.find())
+### 헤더의 사용
+##### ```#```의 개수가 늘어날수록 글자의 크기가 작아짐
 ```
-
-## BSON Datatype
-
-`{field : value}` 의 형태를 가짐
-
-### Examples
-
-- NULL
-- Undefined
-- Integer / Double
-- String
-- Object `{}`
-- Array []
-- Boolean
-- Date - ISODate
-- ObjectID : 각 Document의 pk값으로 사용
-    - ObjectID(“unix_time device_id pid counter”)
-    - MongoDB의 분산시스템을 염두한 디자인이라고 볼 수 있구만~
-
-MongoDB ↔ pymongo ↔ Python
-
-```python
-from bson import ObjectId
-from datetime import datetime
-
-collection.insert_one({
-	"_id": ObjectId("..."),
-	"name": {"first": "sue", "last": "Turing"},
-	"age": 26,
-	"is_alive" : True,
-	"groups": ["new", "sports"],
-	"viewTime": datetime(2017, 10, 24, 5, 2, 46)
-})
+# This is a Biggest
+## This is a middle
+### This is a smallest
 ```
+# This is a Biggest
+## This is a middle
+### This is a smallest
 
-## `pprint` : pretty print
 
-```python
-from pprint import pprint
-pprint({ BSON document })
+### 블럭인용 문자
+
+```>```를 이용한다.
 ```
-
-## Collection에 Document 삽입하기
-
-### insert One Document
-
-```python
-from pprint import pprint
-result = collection.insert_one(
-	{ document }
-)
-
-print(result.inserted_id) # '...'
-pprint(result.inserted_id) # ObjectId('...')
+> This is markdown!!!!
+>	> This is markdown!!!!
+>	>	> This is markdown!!!!
 ```
-
-### Insert Many Document
-
-```python
-result = collection.insert_many(
-	[{ document }, {document}, ...]
-)
-
-print(result.inserted_ids)
-```
-
-### Example
-
-웹 서버에서 도큐먼트 생성 예시
-
-1. 주어진 정보로 게시글을 insert_one을 저장
-2. 반환된 ObjectId로 해당 게시글을 접속하는 URL을 생성
-3. URL 반환
-
-## Document 검색
-
-- `collection.find({query}, {projection})`
-- query : 필터링 해줄 기준
-- expression : 필터링 후 표현할 방식
-
-```python
-print(list(collection.find())
-```
-
-cf) cursor? : 쿼리 결과에 대한 포인터!
-
-- 도큐먼트의 **위치정보**만을 반환하여 작업을 효율적으로 만들어준다.
-- 수십만개의 Document를 반환하게 된다면? (DB의 특성상 데이터가 크다는 점을 감안하자.)
-- `list()` 메서드를 통해 한번에 cursor로부터 정보를 다 가져올 수 있다
-- `for loop` 을 통해 내용물을 하나씩 처리할 수 있다.
-
-### Query
-
-- 원하는 정보를 걸러내기 위한 깔때기
-- 검색하고자 하는 내용을 쿼리로 표현할 수 있어야 한다
-
-```python
-{"field": value, "field": value}
-```
-
-- 해당 field에 맞는 value값으로 필터링한다.
-
-### Projection
-
-- 해당하는 정보를 보여줄지말지를 결정하는 부분
-
-```python
-{"field": boolean, "field": boolean}
-```
-
-- Boolean이 true라면 해당 field를 표현하고, false라면 해당 field를 제외함
-- Projection은 같은 boolean으로만 표현이 되어야함!
-
----
-
-## Update Document
-
-```python
-# 하나의 도큐먼트를 수정
-res = collection.update_one(
-	{ query },
-	{ update },
-	upsert: Boolean
-)
-
-# 여러개의 도큐먼트를 수정
-res = collection.update_many(
-	{ query },
-	{ update },
-	upsert: Boolean
-)
-
-res.matched_count # found docs
-res.modified_count # modified docs
+> This is markdown!!!!
+>	> This is markdown!!!!
+>	>	> This is markdown!!!!
+### 문자 강조
 
 ```
-
-### 특정 field 값을 업데이트하기
-
-```python
-inventory.update_one(
-	{"item": "canvas"},
-	{"$set": {"qty": 10}}
-)
-
-# update의 key를 $set 으로 설정함으로서 변경 가능
-
-# $set : 해당 field를 다른 속성으로 설정하기
-# $unset : 해당 field를 해제하기
+* Like italic*
+__Bold message__
+~~cancel~~
 ```
 
-### Update 연산자
-
-`$` 으로 시작!
-
-- `$inc` : 해당 field key의 값을 value만큼 증가
-- `$min` : 해당 field key의 값이 value보다 작다면, value로 설정
-- `$max` : 해당 field key의 값이 value보다 크다면, value로 설정
-- `$mul` : 해당 field key값을 value만큼 곱함
-
-### Upsert
-
-- `true`라면: 쿼리의 결과가 없었을 경우 해당하는 도큐먼트를 생성한 다음 삽입
-
-## Delete Document
-
-```python
-result = collection.delete_one(
-	{ query }
+* *Like italic*
+* __Bold message__
+* ~~cancel~~
+### 코드 블록 입력
+###### 강의에서와는 달리 또다른 방법인 `<pre><code>{code}</code></pre>` 이용방식이 존재함
+<pre>
+<code>
+```java
+public class BootSpringBootApplication {
+  public static void main(String[] args) {
+    System.out.println("Hello, Honeymon");
+  }
 }
-
-result = collection.delete_many(
-	{ query }
-)
-
-result.deleted_count # # of deleted docs
 ```
+</code>
+</pre>
 
-# Query Operator(쿼리 연산자)
-
-- `{field: {opr: value, opr: value}, field: …}`
-
-ex:
-
-```javascript
-{
-	"height": {"$gte": 175, "$lte": 180},
-	"width": {"$gte": 60}
+```java
+public class BootSpringBootApplication {
+  public static void main(String[] args) {
+    System.out.println("Hello, Honeymon");
+  }
 }
 ```
 
-- 예외 : 논리연산자 and, or, not은 field자리에 사용될 수 있음
-
-```javascript
-{
-	<$or, $and, $nor>: [<query>, <query>, ...]
-}
-```
-
-- Object의 부분을 접근하기 위해선 dot access를 사용해서 접근해야함
-
-```javascript
-{"name.first": ..., "name.last": ...}
-```
