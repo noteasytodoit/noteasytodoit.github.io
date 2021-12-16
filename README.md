@@ -2,6 +2,7 @@
 
 ## 1.<username>.github.io라는 repo 생성 
 
+## 2. jekyll의 테마를 찾아 깃에서 fork를 통해 가져온 뒤 <username>.github.io에 
 
 You can use Devlopr as a starter for building your own Site. we purposely keep the styling minimal and bare to make it easier to add your own flare and markup. (Under Active Development) !
 
