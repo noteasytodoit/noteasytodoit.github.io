@@ -2,7 +2,7 @@
 layout: post
 title:  "about topic git !"
 summary: "Getting Started postig about git"
-author: Mun Jihwna
+author: Mun Jihwan
 date: '2021-12-16 14:16:23 +0530'
 category: Git
 thumbnail: /assets/img/posts/code.jpg
@@ -16,23 +16,4 @@ You’ll find this post in your `_posts` directory. Go ahead and edit it and re-
 
 To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
 
-Jekyll also offers powerful support for code snippets:
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-
-{% endhighlight %}
-
-or
-
-```javascript
-var a = 1;
-var b = 2;
-function sum (num1,num2){
-  return num1+num2;
-}
-var result = sum(a,b);
-```
